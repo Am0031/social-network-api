@@ -28,9 +28,17 @@ const userSchema = {
       ref: "Friend",
     },
   ],
+  virtuals: {
+    friendCount: {
+      ref: "Friend",
+      localField: "friends",
+      foreignField: "_id",
+      count: true,
+    },
+  },
 };
 
-const schema = new Schema(userSchema);
+const schema = new Schema(userSchema, { toJSON: { virtuals: true } });
 
 const User = model("User", schema);
 
