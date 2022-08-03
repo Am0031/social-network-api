@@ -1,5 +1,4 @@
-require("dotenv").config();
-const mongoose = require("mongoose");
+const connectToDatabase = require("../config/connection");
 
 const { User, Thought, Reaction } = require("../models");
 const { seedReactions } = require("./reactions");
@@ -8,18 +7,7 @@ const { seedUsers } = require("./users");
 
 const init = async () => {
   try {
-    const DB_NAME = process.env.DB_NAME;
-    const MONGODB_URI =
-      process.env.MONGODB_URI || `mongodb://0.0.0.0:27017/${DB_NAME}`;
-
-    const options = {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    };
-
-    await mongoose.connect(MONGODB_URI, options);
-
-    console.log("[INFO]: Successfully connected to DB");
+    await connectToDatabase();
 
     await User.deleteMany({});
     await Thought.deleteMany({});
