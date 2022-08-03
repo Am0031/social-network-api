@@ -4,6 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "dev": "nodemon src/index.js",
+    "seed": "node src/seeds/index.js",
     "start": "node src/index.js"
   },
   "repository": {
@@ -19,6 +21,11 @@
   "homepage": "https://github.com/Am0031/social-network-api#readme",
   "dependencies": {
     "date-fns": "^2.29.1",
-    "express": "^4.18.1"
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1",
+    "mongoose": "^6.5.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.19"
   }
 }
