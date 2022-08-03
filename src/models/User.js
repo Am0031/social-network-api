@@ -25,20 +25,27 @@ const userSchema = {
   friends: [
     {
       type: Schema.Types.ObjectId,
-      ref: "Friend",
+      ref: "User",
     },
   ],
-  virtuals: {
-    friendCount: {
-      ref: "Friend",
-      localField: "friends",
-      foreignField: "_id",
-      count: true,
-    },
-  },
 };
 
-const schema = new Schema(userSchema, { toJSON: { virtuals: true } });
+const schema = new Schema(
+  userSchema,
+  { toJSON: { virtuals: true } },
+  { toObject: { virtuals: true } }
+);
+
+schema.virtual("friendCount").get(() => this.friends.length);
+
+schema.virtual("thoughtCount").get(() => this.thoughts.length);
+
+// schema.virtual("friendCount", {
+//   ref: "User",
+//   localField: "friends",
+//   foreignField: "_id",
+//   count: true,
+// });
 
 const User = model("User", schema);
 
