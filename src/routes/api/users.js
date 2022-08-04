@@ -11,10 +11,10 @@ const friends = require("./friends");
 const router = Router();
 
 router.get("/", getAllUsers);
-router.get("/:id", getUserById);
+router.get("/:userId", getUserById);
 router.post("/", createUser);
-router.put("/:id", updateUserById);
-router.delete("/:id", deleteUserById);
+router.put("/:userId", updateUserById);
+router.delete("/:userId", deleteUserById);
 router.use("/:userId", friends);
 
 module.exports = router;

@@ -4,7 +4,7 @@ const {
   deleteReactionForThought,
 } = require("../../controllers/reactions");
 
-const router = Router();
+const router = Router({ mergeParams: true });
 
 router.post("/reactions", createReactionForThought);
 router.delete("/reactions/:reactionId", deleteReactionForThought);
