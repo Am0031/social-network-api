@@ -37,7 +37,9 @@ const schema = new Schema(
   { toObject: { virtuals: true } }
 );
 
-schema.virtual("reactionCount").get(() => this.reactions.length);
+schema.virtual("reactionCount").get(function () {
+  return this.reactions.length;
+});
 
 const Thought = model("Thought", schema);
 

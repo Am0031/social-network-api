@@ -37,16 +37,13 @@ const schema = new Schema(
   { toObject: { virtuals: true } }
 );
 
-schema.virtual("friendCount").get(() => this.friends.length);
+schema.virtual("friendCount").get(function () {
+  return this.friends.length;
+});
 
-schema.virtual("thoughtCount").get(() => this.thoughts.length);
-
-// schema.virtual("friendCount", {
-//   ref: "User",
-//   localField: "friends",
-//   foreignField: "_id",
-//   count: true,
-// });
+schema.virtual("thoughtCount").get(function () {
+  return this.thoughts.length;
+});
 
 const User = model("User", schema);
 
