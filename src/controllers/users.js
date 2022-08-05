@@ -16,7 +16,9 @@ const getUserById = async (req, res) => {
     const user = await User.findById(userId);
 
     if (!user) {
-      return res.status(404).json({ success: false });
+      return res
+        .status(404)
+        .json({ message: `User with id ${userId} not found` });
     }
 
     return res.json({ data: user });
@@ -33,7 +35,7 @@ const createUser = async (req, res) => {
     const user = await User.create(newUserData);
 
     if (!user) {
-      return res.status(404).json({ success: false });
+      return res.status(404).json({ message: `User not created` });
     }
 
     return res
@@ -72,7 +74,9 @@ const updateUserById = async (req, res) => {
     });
 
     if (!user) {
-      return res.status(404).json({ success: false });
+      return res
+        .status(404)
+        .json({ message: `User with id ${userId} not found` });
     }
 
     return res.json({ message: "User successfully updated" });
@@ -81,7 +85,28 @@ const updateUserById = async (req, res) => {
   }
 };
 const deleteUserById = async (req, res) => {
-  return res.json({ message: "deleting user" });
+  try {
+    const { userId } = req.params;
+
+    const targetUser = await User.findById(userId);
+    if (!targetUser) {
+      return res
+        .status(404)
+        .json({ message: `User with id ${userId} not found` });
+    }
+
+    const response = await User.deleteOne({ _id: userId });
+
+    if (response.status > 299) {
+      return res
+        .status(500)
+        .json({ message: `User with id ${userId} could not be deleted` });
+    }
+
+    return res.json({ message: `User with id ${userId} successfully deleted` });
+  } catch (error) {
+    console.log(`[ERROR]: Failed to get user by id | ${error.message}`);
+  }
 };
 
 module.exports = {
