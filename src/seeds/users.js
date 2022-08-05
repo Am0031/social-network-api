@@ -1,21 +1,6 @@
 const { User } = require("../models");
 const { faker } = require("@faker-js/faker");
 
-// const users = [
-//   {
-//     username: "bob451",
-//     email: "bobsmith@email.com",
-//   },
-//   {
-//     username: "alice345",
-//     email: "alicesmith@email.com",
-//   },
-//   {
-//     username: "max610",
-//     email: "maxblack@email.com",
-//   },
-// ];
-
 const prepareUsersData = () => {
   const users = [];
 
@@ -31,11 +16,43 @@ const prepareUsersData = () => {
   return users;
 };
 
+const allocateFriends = async () => {
+  const users = await User.find({});
+
+  for (let i = 0; i < users.length; i += 1) {
+    const { _id: userId } = users[i];
+    //get a random number for the number fo friends to allocate
+    const numberOfFriends = Math.floor(Math.random() * 5);
+
+    let f = numberOfFriends;
+    let chosenFriendsId = [];
+    while (f > 0) {
+      const filteredUsers = users.filter((user) => user._id !== userId);
+      const friendId =
+        filteredUsers[Math.floor(Math.random() * filteredUsers.length)]._id;
+
+      const alreadyChosen = chosenFriendsId.includes(friendId);
+
+      if (!alreadyChosen) {
+        chosenFriendsId.push(friendId);
+        f -= 1;
+        const userToUpdate = await User.findByIdAndUpdate(userId, {
+          $push: {
+            friends: friendId,
+          },
+        });
+      }
+    }
+  }
+};
+
 const seedUsers = async () => {
   const users = await prepareUsersData();
   const promises = users.map((user) => User.create(user));
 
   await Promise.all(promises);
+
+  const friends = await allocateFriends();
 
   console.log("[INFO]: Successfully seeded users");
 };
