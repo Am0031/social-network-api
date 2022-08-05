@@ -21,7 +21,7 @@ const prepareUsersData = () => {
 
   //create a number of users
   for (let i = 0; i < 20; i += 1) {
-    const username = faker.internet.username();
+    const username = faker.internet.userName();
     const email = faker.internet.exampleEmail();
     const user = { username, email };
     users.push(user);
