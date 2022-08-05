@@ -43,7 +43,40 @@ const createUser = async (req, res) => {
 };
 
 const updateUserById = async (req, res) => {
-  return res.json({ message: "updating user" });
+  try {
+    const { userId } = req.params;
+    const { username, email } = req.body;
+
+    let userData;
+
+    if (!username && !email) {
+      return res.status(500).json({
+        success: false,
+        message: "no data to proceed with update",
+      });
+    }
+    if (!username) {
+      userData = { email };
+    }
+    if (!email) {
+      userData = { username };
+    }
+    if (email && username) {
+      userData = { username, email };
+    }
+
+    const user = await User.findByIdAndUpdate(userId, {
+      $set: userData,
+    });
+
+    if (!user) {
+      return res.status(404).json({ success: false });
+    }
+
+    return res.json({ message: "User successfully updated" });
+  } catch (error) {
+    console.log(`[ERROR]: Failed to update user | ${error.message}`);
+  }
 };
 const deleteUserById = async (req, res) => {
   return res.json({ message: "deleting user" });
