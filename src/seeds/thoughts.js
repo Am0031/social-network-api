@@ -15,12 +15,12 @@ const prepareThoughtsData = async () => {
     for (let n = 0; n < numberOfThoughts; n += 1) {
       const thoughtText = faker.lorem.sentence();
       const createdAt = faker.date.recent();
-      const thought = { thoughtText, createdAt, username };
+
       //create thought
+      const thought = { thoughtText, createdAt, username };
       const createdThought = await Thought.create(thought);
       //add thoughtId to user's thought array
       const { _id: thoughtId } = createdThought;
-      //populate thoughtId into User's thoughts array
       const userToUpdate = await User.findByIdAndUpdate(userId, {
         $push: {
           thoughts: thoughtId,

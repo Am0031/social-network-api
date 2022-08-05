@@ -32,7 +32,6 @@ const reactionSchema = {
 
 const schema = new Schema(reactionSchema, {
   toJSON: { getters: true },
-  id: false,
 });
 
 const Reaction = model("Reaction", schema);

@@ -20,7 +20,7 @@ const init = async () => {
     await seedThoughts();
 
     // seed Reactions
-    // await seedReactions();
+    await seedReactions();
   } catch (error) {
     console.log(`[ERROR]: Failed to seed DB | ${error.message}`);
   }
