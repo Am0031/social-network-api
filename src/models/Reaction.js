@@ -2,7 +2,7 @@ const { Schema, model, Types } = require("mongoose");
 const { format } = require("date-fns");
 
 const reactionSchema = {
-  //override the default _id
+  //does not override the _id but is set to be the same value as _id when creating the reaction
   reactionId: {
     type: Schema.Types.ObjectId,
     default: () => new Types.ObjectId(),
