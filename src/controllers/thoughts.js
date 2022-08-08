@@ -1,4 +1,4 @@
-const { Thought } = require("../models");
+const { Thought, User } = require("../models");
 
 const getAllThoughts = async (req, res) => {
   try {
@@ -27,7 +27,39 @@ const getThoughtById = async (req, res) => {
   }
 };
 const createThought = async (req, res) => {
-  return res.json({ message: "creating Thought" });
+  try {
+    const { username, thoughtText } = req.body;
+
+    const createdAt = new Date();
+
+    const newThoughtData = { username, thoughtText, createdAt };
+
+    const thought = await Thought.create(newThoughtData);
+
+    if (!thought) {
+      return res.status(404).json({ message: `Thought not created` });
+    }
+
+    const thoughtId = thought._id;
+    const userToUpdate = await User.findOneAndUpdate(
+      { username: username },
+      {
+        $push: {
+          thoughts: thoughtId,
+        },
+      }
+    );
+
+    return res
+      .status(201)
+      .json({
+        message: "Thought successfully created",
+        id: thought._id,
+        username: username,
+      });
+  } catch (error) {
+    console.log(`[ERROR]: Failed to create thought | ${error.message}`);
+  }
 };
 const updateThoughtById = async (req, res) => {
   return res.json({ message: "updating Thought" });
