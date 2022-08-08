@@ -13,7 +13,7 @@ const thoughtSchema = {
     type: String,
     required: true,
     minLength: 2,
-    maxLength: 255,
+    maxLength: 5000,
     trim: true,
   },
   createdAt: {

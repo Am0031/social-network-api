@@ -18,7 +18,7 @@ const reactionSchema = {
     type: String,
     required: true,
     minLength: 2,
-    maxLength: 255,
+    maxLength: 2000,
     trim: true,
   },
   createdAt: {
