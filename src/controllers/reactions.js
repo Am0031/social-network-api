@@ -43,7 +43,37 @@ const createReactionForThought = async (req, res) => {
 };
 
 const deleteReactionForThought = async (req, res) => {
-  return res.json({ message: "deleting Reaction for Thought" });
+  try {
+    const { thoughtId, reactionId } = req.params;
+
+    const targetReaction = await Reaction.findById(reactionId);
+    if (!targetReaction) {
+      return res.status(404).json({ message: `Reaction not found` });
+    }
+
+    const response = await Reaction.deleteOne({ _id: reactionId });
+
+    if (response.status > 299) {
+      return res.status(500).json({ message: `Reaction could not be deleted` });
+    }
+
+    const cascadingResponse = await Thought.findOneAndUpdate(
+      { _id: thoughtId },
+      { $pull: { reactions: reactionId } }
+    );
+
+    if (cascadingResponse.status > 299) {
+      return res.status(500).json({
+        message: `Reaction could not be deleted from thought's reactions array`,
+      });
+    }
+
+    return res.json({
+      message: `Reaction successfully deleted`,
+    });
+  } catch (error) {
+    console.log(`[ERROR]: Failed to get reaction by id | ${error.message}`);
+  }
 };
 
 module.exports = {

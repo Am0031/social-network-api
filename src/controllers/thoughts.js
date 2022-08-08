@@ -16,9 +16,7 @@ const getThoughtById = async (req, res) => {
     const thought = await Thought.findById(thoughtId);
 
     if (!thought) {
-      return res
-        .status(404)
-        .json({ message: `Thought with id ${thoughtId} not found` });
+      return res.status(404).json({ message: `Thought not found` });
     }
 
     return res.json({ data: thought });
@@ -94,9 +92,7 @@ const deleteThoughtById = async (req, res) => {
 
     const targetThought = await Thought.findById(thoughtId);
     if (!targetThought) {
-      return res
-        .status(404)
-        .json({ message: `Thought with id ${thoughtId} not found` });
+      return res.status(404).json({ message: `Thought not found` });
     }
 
     const targetUser = targetThought.username;
@@ -104,9 +100,7 @@ const deleteThoughtById = async (req, res) => {
     const response = await Thought.deleteOne({ _id: thoughtId });
 
     if (response.status > 299) {
-      return res
-        .status(500)
-        .json({ message: `Thought with id ${thoughtId} could not be deleted` });
+      return res.status(500).json({ message: `Thought could not be deleted` });
     }
 
     const cascadingResponse = await User.findOneAndUpdate(
@@ -116,12 +110,12 @@ const deleteThoughtById = async (req, res) => {
 
     if (cascadingResponse.status > 299) {
       return res.status(500).json({
-        message: `Thought with id ${thoughtId} could not be deleted from User's thoughts array`,
+        message: `Thought could not be deleted from User's thoughts array`,
       });
     }
 
     return res.json({
-      message: `Thought with id ${thoughtId} successfully deleted`,
+      message: `Thought successfully deleted`,
     });
   } catch (error) {
     console.log(`[ERROR]: Failed to get thought by id | ${error.message}`);
