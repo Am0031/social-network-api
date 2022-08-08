@@ -50,19 +50,43 @@ const createThought = async (req, res) => {
       }
     );
 
-    return res
-      .status(201)
-      .json({
-        message: "Thought successfully created",
-        id: thought._id,
-        username: username,
-      });
+    return res.status(201).json({
+      message: "Thought successfully created",
+      id: thought._id,
+      username: username,
+    });
   } catch (error) {
     console.log(`[ERROR]: Failed to create thought | ${error.message}`);
   }
 };
 const updateThoughtById = async (req, res) => {
-  return res.json({ message: "updating Thought" });
+  try {
+    const { thoughtId } = req.params;
+    const { thoughtText } = req.body;
+
+    if (!thoughtText) {
+      return res.status(500).json({
+        success: false,
+        message: "no data to proceed with update",
+      });
+    }
+
+    const thoughtData = { thoughtText };
+
+    const thought = await Thought.findByIdAndUpdate(thoughtId, {
+      $set: thoughtData,
+    });
+
+    if (!thought) {
+      return res
+        .status(404)
+        .json({ message: `Thought with id ${thoughtId} not found` });
+    }
+
+    return res.json({ message: "Thought successfully updated" });
+  } catch (error) {
+    console.log(`[ERROR]: Failed to update thought | ${error.message}`);
+  }
 };
 const deleteThoughtById = async (req, res) => {
   return res.json({ message: "deleting Thought" });
