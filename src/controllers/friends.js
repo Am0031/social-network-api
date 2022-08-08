@@ -2,11 +2,11 @@ const { User } = require("../models");
 
 const createFriendForUser = async (req, res) => {
   try {
-    const { userId } =  req.params;
+    const { userId } = req.params;
     const { friendId } = req.body;
 
     const firstStep = await User.findOneAndUpdate(
-      {_id: userId},
+      { _id: userId },
       {
         $push: {
           friends: friendId,
@@ -19,7 +19,7 @@ const createFriendForUser = async (req, res) => {
     }
 
     const secondStep = await User.findOneAndUpdate(
-      {_id: friendId},
+      { _id: friendId },
       {
         $push: {
           friends: userId,
@@ -28,7 +28,9 @@ const createFriendForUser = async (req, res) => {
     );
 
     return res.status(201).json({
-      message: "Friendship successfully created"
+      message: "Friendship successfully created",
+      friendId: friendId,
+      userId: userId,
     });
   } catch (error) {
     console.log(`[ERROR]: Failed to create friendship | ${error.message}`);
@@ -36,7 +38,45 @@ const createFriendForUser = async (req, res) => {
 };
 
 const deleteFriendForUser = async (req, res) => {
-  return res.json({ message: "deleting friend for user" });
+  try {
+    const { userId, friendId } = req.params;
+
+    const targetUser = await User.findById(userId);
+    if (!targetUser) {
+      return res.status(404).json({ message: `User not found` });
+    }
+
+    const targetFriend = await User.findById(friendId);
+    if (!targetFriend) {
+      return res.status(404).json({ message: `Friend not found` });
+    }
+
+    const firstStep = await User.findOneAndUpdate(
+      { _id: userId },
+      { $pull: { friends: friendId } }
+    );
+    if (firstStep.status > 299) {
+      return res.status(500).json({
+        message: `Friendship could not be deleted`,
+      });
+    }
+
+    const secondStep = await User.findOneAndUpdate(
+      { _id: friendId },
+      { $pull: { friends: userId } }
+    );
+    if (secondStep.status > 299) {
+      return res.status(500).json({
+        message: `Friendship could not be deleted`,
+      });
+    }
+
+    return res.json({
+      message: `Friendship successfully deleted`,
+    });
+  } catch (error) {
+    console.log(`[ERROR]: Failed to delete friendship`);
+  }
 };
 
 module.exports = {

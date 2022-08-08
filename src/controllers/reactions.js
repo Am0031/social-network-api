@@ -1,8 +1,8 @@
-const createReactionForThought = (req, res) => {
+const createReactionForThought = async (req, res) => {
   return res.json({ message: "creating Reaction for Thought" });
 };
 
-const deleteReactionForThought = (req, res) => {
+const deleteReactionForThought = async (req, res) => {
   return res.json({ message: "deleting Reaction for Thought" });
 };
 
