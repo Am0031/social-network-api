@@ -1,4 +1,4 @@
-const { User } = require("../models");
+const { User, Thought, Reaction } = require("../models");
 
 const getAllUsers = async (req, res) => {
   try {
@@ -95,12 +95,34 @@ const deleteUserById = async (req, res) => {
         .json({ message: `User with id ${userId} not found` });
     }
 
+    const username = targetUser.username;
+
     const response = await User.deleteOne({ _id: userId });
 
     if (response.status > 299) {
       return res
         .status(500)
         .json({ message: `User with id ${userId} could not be deleted` });
+    }
+
+    const cascadingToThoughts = await Thought.deleteMany({
+      username: username,
+    });
+
+    if (cascadingToThoughts.status > 299) {
+      return res.status(500).json({
+        message: `Thoughts from this user could not be deleted`,
+      });
+    }
+
+    const cascadingToReactions = await Reaction.deleteMany({
+      username: username,
+    });
+
+    if (cascadingToReactions.status > 299) {
+      return res.status(500).json({
+        message: `Reactions from this user could not be deleted`,
+      });
     }
 
     return res.json({ message: `User with id ${userId} successfully deleted` });
