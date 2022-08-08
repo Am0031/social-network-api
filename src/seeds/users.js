@@ -36,9 +36,14 @@ const allocateFriends = async () => {
       if (!alreadyChosen) {
         chosenFriendsId.push(friendId);
         f -= 1;
-        const userToUpdate = await User.findByIdAndUpdate(userId, {
+        const firstUpdate = await User.findByIdAndUpdate(userId, {
           $push: {
             friends: friendId,
+          },
+        });
+        const secondUpdate = await User.findByIdAndUpdate(friendId, {
+          $push: {
+            friends: userId,
           },
         });
       }
