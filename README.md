@@ -123,7 +123,7 @@ Step 1: Set the environment variables
 In the root folder, create a .env file. Copy the content from the .env.sample file into your newly created .env file and complete each line as per the below guidance:
 
 ```
-DB_NAME= "socialdb"
+DB_NAME= "socialdb" (or a name of your choice)
 ```
 
 Step 2: Database setup
