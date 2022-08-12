@@ -88,11 +88,6 @@ In addition to the above fields, the following virtuals are set up:
 - `thoughtCount`: in the User model, to track the number of documents in the collection `thoughts` for each user
 - `reactionCount`: in the Thought model, to track the number of documents in the collection `reactions` for each thought
 
-### Server routes
-
-Our server routes to our various end points are:
-![Routes]()
-
 ## Installation
 
 To get this project installed, the following steps are required:
