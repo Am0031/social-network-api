@@ -7,7 +7,7 @@
 This project is about building the backend of a social network app, configuring a working Express server and using a MongoDB database, and using mongoose for models and queries.
 
 Github repo: [Go to Repo](https://github.com/Am0031/social-network-api/tree/dev)
-Demo video: [Go to Demo video]()
+Demo video: [Go to Demo video](https://drive.google.com/file/d/1rd4OKg6MdHiqG89ogH_8CX0tH3xTvRie/view)
 
 ## Table of Contents
 
@@ -59,7 +59,7 @@ For this project, the following technologies and packages were used:
   - "[@faker-js/faker](https://www.npmjs.com/package/@faker-js/faker)": "^7.3.0"
 
 For testing of the API calls: Postman.
-You can see the Postman collection of requests by uploading [this file]() into your postman application and testing these requests.
+You can see the Postman collection of requests by uploading [this file](./social-network.postman_collection.json) into your postman application and testing these requests.
 
 ## Main logic of the application
 
@@ -181,7 +181,7 @@ Running the folders in the postman collections gives the following results:
 ## Demo video of the application
 
 This video shows how to set up the application and how to test the end points using Postman and MongoDb Compass.
-Please click [here]() to open the video.
+Please click [here](https://drive.google.com/file/d/1rd4OKg6MdHiqG89ogH_8CX0tH3xTvRie/view) to open the video.
 
 ## Contact me
 
