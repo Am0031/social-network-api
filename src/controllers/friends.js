@@ -29,7 +29,11 @@ const createFriendForUser = async (req, res) => {
       userId: userId,
     });
   } catch (error) {
-    console.log(`[ERROR]: Failed to create friendship | ${error.message}`);
+    return res
+      .status(500)
+      .json({
+        message: `[ERROR]: Failed to create friendship | ${error.message}`,
+      });
   }
 };
 
@@ -61,7 +65,11 @@ const deleteFriendForUser = async (req, res) => {
       message: `Friendship successfully deleted`,
     });
   } catch (error) {
-    console.log(`[ERROR]: Failed to delete friendship`);
+    return res
+      .status(500)
+      .json({
+        message: `[ERROR]: Failed to delete friendship | ${error.message}`,
+      });
   }
 };
 

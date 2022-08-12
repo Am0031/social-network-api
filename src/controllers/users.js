@@ -6,7 +6,7 @@ const getAllUsers = async (req, res) => {
 
     return res.json({ data: users });
   } catch (error) {
-    console.log(`[ERROR]: Failed to get all users | ${error.message}`);
+    return res.status(500).json({ message: `[ERROR]: Failed to get all users | ${error.message}`});
   }
 };
 const getUserById = async (req, res) => {
@@ -23,7 +23,7 @@ const getUserById = async (req, res) => {
 
     return res.json({ data: user });
   } catch (error) {
-    console.log(`[ERROR]: Failed to get user by id | ${error.message}`);
+    return res.status(500).json({ message: `[ERROR]: Failed to get user by id | ${error.message}`});
   }
 };
 const createUser = async (req, res) => {
@@ -42,7 +42,7 @@ const createUser = async (req, res) => {
       .status(201)
       .json({ message: "User successfully created", id: user._id });
   } catch (error) {
-    console.log(`[ERROR]: Failed to create user | ${error.message}`);
+    return res.status(500).json({ message: `[ERROR]: Failed to create user | ${error.message}`});
   }
 };
 
@@ -76,12 +76,12 @@ const updateUserById = async (req, res) => {
     if (!user) {
       return res
         .status(404)
-        .json({ message: `User with id ${userId} not found` });
+        .json({ message: `User not found` });
     }
 
     return res.json({ message: "User successfully updated" });
   } catch (error) {
-    console.log(`[ERROR]: Failed to update user | ${error.message}`);
+    return res.status(500).json({ message: `[ERROR]: Failed to update user | ${error.message}`});
   }
 };
 const deleteUserById = async (req, res) => {
@@ -92,7 +92,7 @@ const deleteUserById = async (req, res) => {
     if (!targetUser) {
       return res
         .status(404)
-        .json({ message: `User with id ${userId} not found` });
+        .json({ message: `User not found` });
     }
 
     const username = targetUser.username;
@@ -102,7 +102,7 @@ const deleteUserById = async (req, res) => {
     if (response.status > 299) {
       return res
         .status(500)
-        .json({ message: `User with id ${userId} could not be deleted` });
+        .json({ message: `User could not be deleted` });
     }
 
     const cascadingToThoughts = await Thought.deleteMany({
@@ -125,9 +125,9 @@ const deleteUserById = async (req, res) => {
       });
     }
 
-    return res.json({ message: `User with id ${userId} successfully deleted` });
+    return res.json({ message: `User successfully deleted` });
   } catch (error) {
-    console.log(`[ERROR]: Failed to get user by id | ${error.message}`);
+    return res.status(500).json({ message: `[ERROR]: Failed to delete user by id | ${error.message}`});
   }
 };
 

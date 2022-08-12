@@ -38,7 +38,11 @@ const createReactionForThought = async (req, res) => {
       reactionId: reactionId,
     });
   } catch (error) {
-    console.log(`[ERROR]: Failed to create reaction | ${error.message}`);
+    return res
+      .status(500)
+      .json({
+        message: `[ERROR]: Failed to create reaction | ${error.message}`,
+      });
   }
 };
 
@@ -72,7 +76,11 @@ const deleteReactionForThought = async (req, res) => {
       message: `Reaction successfully deleted`,
     });
   } catch (error) {
-    console.log(`[ERROR]: Failed to get reaction by id | ${error.message}`);
+    return res
+      .status(500)
+      .json({
+        message: `[ERROR]: Failed to delete reaction | ${error.message}`,
+      });
   }
 };
 

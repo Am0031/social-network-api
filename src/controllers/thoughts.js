@@ -6,7 +6,11 @@ const getAllThoughts = async (req, res) => {
 
     return res.json({ data: thoughts });
   } catch (error) {
-    console.log(`[ERROR]: Failed to get all thoughts | ${error.message}`);
+    return res
+      .status(500)
+      .json({
+        message: `[ERROR]: Failed to get all thoughts | ${error.message}`,
+      });
   }
 };
 const getThoughtById = async (req, res) => {
@@ -21,7 +25,11 @@ const getThoughtById = async (req, res) => {
 
     return res.json({ data: thought });
   } catch (error) {
-    console.log(`[ERROR]: Failed to get thought by id | ${error.message}`);
+    return res
+      .status(500)
+      .json({
+        message: `[ERROR]: Failed to get thought by id | ${error.message}`,
+      });
   }
 };
 const createThought = async (req, res) => {
@@ -54,7 +62,11 @@ const createThought = async (req, res) => {
       username: username,
     });
   } catch (error) {
-    console.log(`[ERROR]: Failed to create thought | ${error.message}`);
+    return res
+      .status(500)
+      .json({
+        message: `[ERROR]: Failed to create thought | ${error.message}`,
+      });
   }
 };
 const updateThoughtById = async (req, res) => {
@@ -76,14 +88,16 @@ const updateThoughtById = async (req, res) => {
     });
 
     if (!thought) {
-      return res
-        .status(404)
-        .json({ message: `Thought with id ${thoughtId} not found` });
+      return res.status(404).json({ message: `Thought not found` });
     }
 
     return res.json({ message: "Thought successfully updated" });
   } catch (error) {
-    console.log(`[ERROR]: Failed to update thought | ${error.message}`);
+    return res
+      .status(500)
+      .json({
+        message: `[ERROR]: Failed to update thought | ${error.message}`,
+      });
   }
 };
 const deleteThoughtById = async (req, res) => {
@@ -118,7 +132,11 @@ const deleteThoughtById = async (req, res) => {
       message: `Thought successfully deleted`,
     });
   } catch (error) {
-    console.log(`[ERROR]: Failed to get thought by id | ${error.message}`);
+    return res
+      .status(500)
+      .json({
+        message: `[ERROR]: Failed to delete thought by id | ${error.message}`,
+      });
   }
 };
 
