@@ -12,7 +12,7 @@ const createReactionForThought = async (req, res) => {
     const reaction = await Reaction.create(newReactionData);
 
     if (!reaction) {
-      return res.status(404).json({ message: `Reaction not created` });
+      return res.status(500).json({ message: `Reaction not created` });
     }
 
     const reactionId = reaction._id;

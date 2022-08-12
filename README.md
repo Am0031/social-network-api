@@ -149,7 +149,39 @@ Step 4: Run the Postman collection
 
 Once your server is up and running, open Postman and upload the postman collection file.
 Once successfully uploaded, you will see folders representing different workflows. These folders can be run independently, or you can run the complete collection, to check that all end points work.
+
+How to run a folder:
+![Run folder](./other/postman-folder-menu.png)
+
+How to run the complete collection:
+![Run Collection](./other/postman-collection-menu.png)
+
 When running a folder or a complete collection, it's important to keep in mind that tests are executed in the order in which they appear in the list, and variables are cascaded down in that order.
+
+## Test Results
+
+Running the folders in the postman collections gives the following results:
+
+<details>
+<summary> Postman Collection results - Users workflow</summary>
+
+![Users workflow](./other/postman-users-result-summary-v2.png)
+
+</details>
+
+<details>
+<summary> Postman Collection results - Thoughts workflow</summary>
+
+![Thoughts workflow](./other/postman-thoughts-result-summary-v2.png)
+
+</details>
+
+<details>
+<summary> Postman Collection results - Cascade deletion demo</summary>
+
+![Cascade workflow](./other/postman-cascade-result-summary-v2.png)
+
+</details>
 
 ## Demo video of the application
 

@@ -16,7 +16,7 @@ const getThoughtById = async (req, res) => {
     const thought = await Thought.findById(thoughtId);
 
     if (!thought) {
-      return res.status(404).json({ message: `Thought not found` });
+      return res.status(500).json({ message: `Thought not found` });
     }
 
     return res.json({ data: thought });
@@ -35,7 +35,7 @@ const createThought = async (req, res) => {
     const thought = await Thought.create(newThoughtData);
 
     if (!thought) {
-      return res.status(404).json({ message: `Thought not created` });
+      return res.status(500).json({ message: `Thought not created` });
     }
 
     const thoughtId = thought._id;

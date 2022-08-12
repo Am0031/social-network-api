@@ -14,10 +14,6 @@ const createFriendForUser = async (req, res) => {
       }
     );
 
-    if (!firstStep) {
-      return res.status(404).json({ message: `Friendship not created` });
-    }
-
     const secondStep = await User.findOneAndUpdate(
       { _id: friendId },
       {
@@ -55,21 +51,11 @@ const deleteFriendForUser = async (req, res) => {
       { _id: userId },
       { $pull: { friends: friendId } }
     );
-    if (firstStep.status > 299) {
-      return res.status(500).json({
-        message: `Friendship could not be deleted`,
-      });
-    }
 
     const secondStep = await User.findOneAndUpdate(
       { _id: friendId },
       { $pull: { friends: userId } }
     );
-    if (secondStep.status > 299) {
-      return res.status(500).json({
-        message: `Friendship could not be deleted`,
-      });
-    }
 
     return res.json({
       message: `Friendship successfully deleted`,
