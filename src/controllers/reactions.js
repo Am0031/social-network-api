@@ -5,9 +5,7 @@ const createReactionForThought = async (req, res) => {
     const { thoughtId } = req.params;
     const { reactionBody, username } = req.body;
 
-    const createdAt = new Date();
-
-    const newReactionData = { username, reactionBody, createdAt };
+    const newReactionData = { username, reactionBody };
 
     const reaction = await Reaction.create(newReactionData);
 
@@ -38,11 +36,9 @@ const createReactionForThought = async (req, res) => {
       reactionId: reactionId,
     });
   } catch (error) {
-    return res
-      .status(500)
-      .json({
-        message: `[ERROR]: Failed to create reaction | ${error.message}`,
-      });
+    return res.status(500).json({
+      message: `[ERROR]: Failed to create reaction | ${error.message}`,
+    });
   }
 };
 
@@ -76,11 +72,9 @@ const deleteReactionForThought = async (req, res) => {
       message: `Reaction successfully deleted`,
     });
   } catch (error) {
-    return res
-      .status(500)
-      .json({
-        message: `[ERROR]: Failed to delete reaction | ${error.message}`,
-      });
+    return res.status(500).json({
+      message: `[ERROR]: Failed to delete reaction | ${error.message}`,
+    });
   }
 };
 
